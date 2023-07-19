@@ -4,7 +4,7 @@ import socket
 from logstash_async.handler import AsynchronousLogstashHandler
 from logstash_async.transport import TcpTransport
 
-from settings import PROJECT_NAME, LOG_LEVEL, LOGSTASH_HOST, LOGSTASH_PORT
+from .settings import PROJECT_NAME, LOG_LEVEL, LOGSTASH_HOST, LOGSTASH_PORT
 
 
 HOSTNAME = socket.gethostname()
