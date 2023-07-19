@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "holz-python-logger"
+version = "0.1.0"
+description = ""
+authors = ["CherryNick <17rolex@gmail.com>"]
+readme = "README.md"
+packages = [{include = "holz_python_logger"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+python-logstash-async = "^2.5.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
