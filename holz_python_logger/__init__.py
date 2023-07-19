@@ -1,1 +1,1 @@
-from logger import holz_logger
+from .logger import holz_logger
