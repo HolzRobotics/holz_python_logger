@@ -4,7 +4,7 @@ import socket
 from logstash_async.handler import AsynchronousLogstashHandler
 from logstash_async.transport import TcpTransport
 
-from .settings import PROJECT_NAME, LOG_LEVEL, LOGSTASH_HOST, LOGSTASH_PORT
+from .settings import PROJECT_NAME, LOG_LEVEL, LOGSTASH_HOST, LOGSTASH_PORT, ENVIRONMENT
 
 
 HOSTNAME = socket.gethostname()
@@ -46,6 +46,7 @@ class HolzLogger:
             kwargs['extra'] = {'project': PROJECT_NAME}
 
         kwargs['extra']['hostname'] = HOSTNAME
+        kwargs['extra']['environment'] = ENVIRONMENT
         return kwargs
 
     def _log(self, level, msg, *args, **kwargs):
