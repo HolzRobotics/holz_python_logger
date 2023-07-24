@@ -34,6 +34,14 @@ handler = AsynchronousLogstashHandler(
 
 logger.addHandler(handler)
 
+# Add a StreamHandler for Docker logs
+stream_handler = logging.StreamHandler()
+stream_handler.setLevel(LOG_LEVEL)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+stream_handler.setFormatter(formatter)
+
+logger.addHandler(stream_handler)
+
 
 class HolzLogger:
     def __init__(self, logger_):
