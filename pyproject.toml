@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "holz-python-logger"
-version = "0.1.0"
+version = "0.2.0"
 description = ""
 authors = ["CherryNick <17rolex@gmail.com>"]
 readme = "README.md"

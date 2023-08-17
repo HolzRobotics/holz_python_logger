@@ -13,26 +13,6 @@ HOSTNAME = socket.gethostname()
 logger = logging.getLogger("python-logstash-logger")
 logger.setLevel(LOG_LEVEL)
 
-if not LOGSTASH_HOST or not LOGSTASH_PORT:
-    raise ValueError('LOGSTASH_HOST MUST BE SET')
-
-handler = AsynchronousLogstashHandler(
-    LOGSTASH_HOST,
-    LOGSTASH_PORT,
-    transport=TcpTransport(
-        LOGSTASH_HOST,
-        LOGSTASH_PORT,
-        timeout=5.0,
-        ssl_enable=False,
-        ssl_verify=False,
-        keyfile=None,
-        certfile=None,
-        ca_certs=None
-    ),
-    database_path=None,
-)
-
-logger.addHandler(handler)
 
 # Add a StreamHandler for Docker logs
 stream_handler = logging.StreamHandler()
@@ -41,6 +21,28 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 stream_handler.setFormatter(formatter)
 
 logger.addHandler(stream_handler)
+
+
+if LOGSTASH_HOST and LOGSTASH_PORT:
+    handler = AsynchronousLogstashHandler(
+        LOGSTASH_HOST,
+        LOGSTASH_PORT,
+        transport=TcpTransport(
+            LOGSTASH_HOST,
+            LOGSTASH_PORT,
+            timeout=5.0,
+            ssl_enable=False,
+            ssl_verify=False,
+            keyfile=None,
+            certfile=None,
+            ca_certs=None
+        ),
+        database_path=None,
+    )
+
+    logger.addHandler(handler)
+else:
+    logger.warning('Logstash variables not found, start with StreamHandler only')
 
 
 class HolzLogger:
