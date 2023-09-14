@@ -8,7 +8,7 @@ packages = [{include = "holz_python_logger"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-python-logstash-async = "^2.5.0"
+python-logstash-async = "2.7.0"
 
 
 [build-system]
