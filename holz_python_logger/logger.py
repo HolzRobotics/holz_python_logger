@@ -1,6 +1,5 @@
 import logging
 import socket
-from inspect import currentframe
 
 from logstash_async.handler import AsynchronousLogstashHandler
 from logstash_async.transport import TcpTransport
@@ -58,7 +57,6 @@ class HolzLogger:
 
         kwargs['extra']['hostname'] = HOSTNAME
         kwargs['extra']['environment'] = ENVIRONMENT
-        kwargs['extra']['func_name'] = currentframe().f_back.f_back.f_back.f_code.co_name
         return kwargs
 
     def _log(self, level, msg, *args, **kwargs):
