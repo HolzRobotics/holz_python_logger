@@ -16,7 +16,7 @@ logger.setLevel(LOG_LEVEL)
 # Add a StreamHandler for Docker logs
 stream_handler = logging.StreamHandler()
 stream_handler.setLevel(LOG_LEVEL)
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s - %(func_name)s')
 stream_handler.setFormatter(formatter)
 
 logger.addHandler(stream_handler)
