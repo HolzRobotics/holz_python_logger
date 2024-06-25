@@ -1,10 +1,10 @@
 import logging
 import socket
 
-from logstash_async.handler import AsynchronousLogstashHandler
+from logstash_async.handler import AsynchronousLogstashHandler, SynchronousLogstashHandler
 from logstash_async.transport import TcpTransport
 
-from .settings import PROJECT_NAME, LOG_LEVEL, LOGSTASH_HOST, LOGSTASH_PORT, ENVIRONMENT
+from .settings import PROJECT_NAME, LOG_LEVEL, LOGSTASH_HOST, LOGSTASH_PORT, ENVIRONMENT, ASYNC_LOGGER
 
 
 HOSTNAME = socket.gethostname()
@@ -16,14 +16,15 @@ logger.setLevel(LOG_LEVEL)
 # Add a StreamHandler for Docker logs
 stream_handler = logging.StreamHandler()
 stream_handler.setLevel(LOG_LEVEL)
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(funcName)20s()- %(message)s')
 stream_handler.setFormatter(formatter)
 
 logger.addHandler(stream_handler)
 
 
 if LOGSTASH_HOST and LOGSTASH_PORT:
-    handler = AsynchronousLogstashHandler(
+    logstash_handler_fun = AsynchronousLogstashHandler if ASYNC_LOGGER else SynchronousLogstashHandler
+    handler = logstash_handler_fun(
         LOGSTASH_HOST,
         LOGSTASH_PORT,
         transport=TcpTransport(
