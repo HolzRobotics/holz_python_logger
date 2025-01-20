@@ -46,7 +46,7 @@ else:
 
 class HolzLogger:
 
-    log_max_length = 0
+    log_max_length = None
 
     def __init__(self, logger_):
         self._logger = logger_
@@ -63,7 +63,7 @@ class HolzLogger:
         return kwargs
 
     def _log(self, level, msg, *args, **kwargs):
-        if self.log_max_length:
+        if self.log_max_length is not None:
             msg = self._log_truncate(msg)
         kwargs = self._extend_kwargs(**kwargs)
         self._logger.log(level, msg, *args, **kwargs)
