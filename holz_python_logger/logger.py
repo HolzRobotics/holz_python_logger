@@ -45,6 +45,9 @@ else:
 
 
 class HolzLogger:
+
+    log_max_length = None
+
     def __init__(self, logger_):
         self._logger = logger_
 
@@ -60,6 +63,8 @@ class HolzLogger:
         return kwargs
 
     def _log(self, level, msg, *args, **kwargs):
+        if self.log_max_length is not None:
+            msg = self._log_truncate(msg)
         kwargs = self._extend_kwargs(**kwargs)
         self._logger.log(level, msg, *args, **kwargs)
 
@@ -78,6 +83,14 @@ class HolzLogger:
     def exception(self, exc, *args, **kwargs):
         kwargs = self._extend_kwargs(**kwargs)
         self._logger.exception(exc, *args, **kwargs)
+
+    def _log_truncate(self, msg):
+        try:
+            if len(str(msg)) > self.log_max_length:
+                return f"{str(msg)[:self.log_max_length]}..."
+            return msg
+        except Exception:
+            return msg
 
 
 holz_logger = HolzLogger(logger)
